@@ -1,4 +1,5 @@
 export const noteContainer = document.querySelector('.col-8.offset-2');
+export const listItem = [];
 
 /**
  *
@@ -21,4 +22,8 @@ export function addScoreToUi(score) {
   `;
 
     noteContainer.append(card);
+}
+
+export function clearScoresFromUl() {
+    noteContainer.innerHTML = ``;
 }

@@ -1,6 +1,20 @@
 import {HTTP_METHODS, sendRequest} from "./api.js";
 
 export const getScore = (query) => {
+
+    if (query) {
+        if (query.length >= 4) {
+
+            const searchParams = new URLSearchParams();
+            searchParams.append('query', query);
+
+            return sendRequest(`/score?${searchParams.toString()}`, HTTP_METHODS.get);
+        } else {
+            return Promise.reject(new Error('Search bar must be have 4 or more than 4 characters'));
+        }
+
+    }
+
     return sendRequest(`/score`, HTTP_METHODS.get);
 }
 
@@ -19,7 +33,7 @@ export const createScore = (scoreData) => {
 /**
  *
  * @param {string}id
- * @param {Object}scoreData
+ * @param {{note: *, score: (*|number)}}scoreData
  * @param {string} scoreData.note
  * @param {number} scodeData.score
  * @param {string} scoreData.id

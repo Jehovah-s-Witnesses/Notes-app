@@ -18,12 +18,12 @@
       <form class="form-card">
         <div class="mb-3">
           <label for="text" class="form-label">Note text</label>
-          <textarea class="form-control is-invalid" id="text" aria-describedby="textValidationMessage"></textarea>
-          <div id="textValidationMessage" class="invalid-feedback">We'll never share your email with anyone else.</div>
+          <textarea class="form-control" id="text" aria-describedby="textValidationMessage"></textarea>
+          <div id="textValidationMessage" class="invalid-feedback">Please provide a valid value.</div>
         </div>
         <div class="col-md-3">
           <label for="validationServer05" class="form-label">Score</label>
-          <input type="number" class="form-control is-invalid input-score" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+          <input type="number" class="form-control input-score " id="validationServer05" aria-describedby="validationServer05Feedback" required>
           <div id="validationServer05Feedback" class="invalid-feedback">
             Please provide a valid score.
           </div>
@@ -34,15 +34,15 @@
   </div>
 
   <div class="container pt-4">
-    <div class="row">
-      <form>
+    <div class="row wrapper-input">
+      <form class="search-form">
+        <label for="validationServer07" class="form-label">Search</label>
         <div class="input-group mb-3">
-          <label for="validationServer02" class="form-label">Search</label>
-          <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Search a note..." aria-label="Search" aria-describedby="button-addon2">
-          <button class="btn btn-primary" type="button" id="button-addon2">Submit</button>
-          <div class="valid-feedback">
-            Looks good!
+          <input type="text" class="form-control input-search " id="validationServer07" placeholder="Search a note..." aria-describedby="validationServer05Feedback" required>
+          <div id="validationServer07Feedback" class="invalid-feedback">
+            Please provide a valid value.
           </div>
+          <button class="btn btn-primary btn-search" type="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -71,7 +71,7 @@
           </div>
           <div class="col-md-3">
             <label for="validationServer05" class="form-label">Score</label>
-            <input type="number" class="form-control input-modal" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+            <input type="number" class="form-control input-modal" id="validationServer06" aria-describedby="validationServer05Feedback" required>
           </div>
         </div>
         <div class="modal-footer">

@@ -1,27 +1,26 @@
-import {addScoreToUi, noteContainer} from './render.js';
-import {createScore, deleteScore, getScore} from "./requests.js";
-import {validateNumber, validateText} from "./validation.js";
+import {addScoreToUi, clearScoresFromUl, listItem} from './render.js';
+import {createScore, getScore} from "./requests.js";
+import {searchInputValidate, validateNumber, validateText} from "./validation.js";
+import {inputModalElement, modalTextAreaElement, openModalWindow} from "./modal.js";
 
 const formElement = document.querySelector('.form-card');
 const textareaElement = document.querySelector('textarea');
 export const inputElement = document.querySelector('.input-score');
-const modalWindowElement = document.querySelector('.modal');
-const modalTextElement = document.querySelector('.modal_text-content');
-const inputModalElement = document.querySelector('.input-modal');
-const modalButton = document.querySelector('.btn-close-down');
-const modalSaveButton = document.querySelector('.btn-edit');
-const closeModalButton = document.querySelector('.btn-close');
+const formSearchElement = document.querySelector('.search-form');
+export const searchInputElement = document.querySelector('.input-search');
 
 getScore().then((scores) => {
-    scores.forEach((score) =>
-    addScoreToUi(score))
+    scores.forEach((score) => {
+        listItem.push(score);
+        addScoreToUi(score);
+    })
 }).catch(error => console.error("Failed to load scores:", error));
 
 formElement.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const noteText = textareaElement.value;
-    const grade = +inputElement.value;
+    const grade = inputElement.value;
 
     if (validateText(textareaElement) && validateNumber(grade)) {
 
@@ -37,33 +36,31 @@ formElement.addEventListener('submit', (event) => {
     }
 })
 
-const openModalWindow = () => {
-    modalWindowElement.classList.add('show');
-    modalWindowElement.classList.remove('fade');
-};
+formSearchElement.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const currentSearchValue = searchInputElement;
 
-const closeModalWindow =  () => {
-    modalWindowElement.classList.remove('show');
-    modalWindowElement.classList.add('fade');
-}
+    if (searchInputValidate(currentSearchValue)) {
 
-noteContainer.onclick = (event) => {
-    const eventTarget = event.target;
-    const currentNote = eventTarget.closest('div.card');
-    const noteText = currentNote.querySelector('.card-header');
-    const gradeNoteValue = currentNote.querySelector('.score');
-    console.log(gradeNoteValue.textContent.slice(6))
+        // TODO: Change this logic to request with query from input. Response should be rendered after clear list
+        const searchInputValue = currentSearchValue.value.toLowerCase();
 
-    if (eventTarget.tagName === 'BUTTON' && eventTarget.dataset.type === 'edit') {
-        modalTextElement.value = noteText.textContent;
-        inputModalElement.value = +gradeNoteValue.textContent.slice(6);
-        openModalWindow();
-    } else if (eventTarget.tagName === 'BUTTON' && eventTarget.dataset.type === 'delete') {
-        const deleteNote = currentNote;
-        deleteScore(deleteNote.dataset.id).then((result) => console.log(result)).catch((err) => console.error(err))
+        getScore(searchInputValue).then((scores) => {
+
+            clearScoresFromUl();
+
+            searchInputElement.value = '';
+
+            if (!scores.length) {
+                console.log('No matching notes found');
+                return;
+            }
+
+            scores.forEach((score) => {
+                addScoreToUi(score);
+            })
+
+        }).catch((err) => console.log(`Error:${err.message}`));
     }
-}
 
-modalButton.onclick =  closeModalWindow;
-closeModalButton.onclick = closeModalWindow;
-
+})
