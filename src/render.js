@@ -1,5 +1,4 @@
 export const noteContainer = document.querySelector('.col-8.offset-2');
-export const listItem = [];
 
 /**
  *
@@ -8,7 +7,7 @@ export const listItem = [];
  * @param {number} score.score
  * @param {string} score.id
  */
-export function addScoreToUi(score) {
+export function renderListItem(score) {
     const card = document.createElement('div');
     card.classList.add('card', 'mb-4');
     card.dataset.id = score.id;
@@ -22,6 +21,16 @@ export function addScoreToUi(score) {
   `;
 
     noteContainer.append(card);
+}
+
+/**
+ *
+ * @param {Array} list
+ */
+export function renderList(list) {
+    list.forEach((note) => {
+        renderListItem(note)
+    })
 }
 
 export function clearScoresFromUl() {

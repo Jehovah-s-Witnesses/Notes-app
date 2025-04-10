@@ -23,7 +23,6 @@ export const getScore = (query) => {
  * @param {Object}scoreData
  * @param {string} scoreData.note
  * @param {number} scoreData.score
- * @param {string} scoreData.id
  * @returns {Promise<Response>}
  */
 export const createScore = (scoreData) => {

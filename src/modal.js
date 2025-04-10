@@ -1,4 +1,4 @@
-import {addScoreToUi, clearScoresFromUl, noteContainer} from "./render.js";
+import {renderListItem, clearScoresFromUl, noteContainer} from "./render.js";
 import {changeScore, deleteScore, getScore} from "./requests.js";
 import {validateNumber, validateText} from "./validation.js";
 
@@ -68,7 +68,7 @@ modalSaveButton.addEventListener('click', () => {
         changeScore(selectedNoteId, newDataScore).then(() => getScore()).then((result) => {
             clearScoresFromUl();
             result.forEach((score) => {
-                addScoreToUi(score);
+                renderListItem(score);
                 closeModalWindow();
             })
         }).catch((err) => console.log(`Error: ${err.message}`));
